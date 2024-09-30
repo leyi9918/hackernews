@@ -1,7 +1,6 @@
 import "./App.css";
 import { useState } from "react";
 
-
 const List = (props) => {
   return (
     <div>
@@ -21,20 +20,19 @@ const List = (props) => {
   );
 };
 
-
-
-
-const Search = props =>{
+const Search = ({search, onSearch}) => {
   return (
     <div>
       <label htmlFor="search">Search: </label>
-      <input value={props.search} id="search" type="text" onChange={props.onSearch} />
+      <input
+        value={search}
+        id="search"
+        type="text"
+        onChange={onSearch}
+      />
     </div>
-  )
-}
-
-
-
+  );
+};
 
 /**
  * 显示search,list组件
@@ -61,18 +59,18 @@ const App = () => {
 
   const [searchTerm, setSearchTerm] = useState("React");
   console.log(searchTerm);
-  const handleSearch = event =>{
+  const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-  }
+  };
 
-  const filteredStories = stories.filter(story =>
-    story.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredStories = stories.filter((story) =>
+    story.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
-  
+
   return (
     <div>
       <h1> Hacker News </h1>
-      <Search search={searchTerm} onSearch={handleSearch}/>
+      <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
       <List list={filteredStories} />
     </div>

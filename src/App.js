@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const List = (props) => {
   return (
@@ -38,6 +38,7 @@ const Search = ({search, onSearch}) => {
  * 显示search,list组件
  */
 const App = () => {
+  // 初始化state
   const stories = [
     {
       title: "React",
@@ -56,15 +57,25 @@ const App = () => {
       objectID: 1,
     },
   ];
+  // 定义state
+  const [searchTerm, setSearchTerm] = useState( localStorage.getItem("search") || "React");
 
-  const [searchTerm, setSearchTerm] = useState("React");
+  // 定义事件处理函数
+  useEffect(
+    ()=>{
+      localStorage.setItem("search", searchTerm);
+    },
+    [searchTerm]
+  )
+  
   console.log(searchTerm);
+  // 定义事件处理函数
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-
+  // 定义组件
   const filteredStories = stories.filter((story) =>
-    story.title.toLowerCase().includes(searchTerm.toLowerCase()),
+story.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
